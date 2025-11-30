@@ -49,7 +49,7 @@ The app includes an intelligent **ducking engine** that automatically lowers the
 ## 🚀 Installation
 
 ```bash
-git clone https://github.com/carlneto/audio-mixer-app.git
+git clone https://github.com/carlneto/AudioMixer.git
 cd audio-mixer-app
 open AudioMixerApp.xcodeproj
 ```
