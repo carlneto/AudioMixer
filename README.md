@@ -29,7 +29,7 @@ Siga os passos abaixo para configurar o projeto localmente.
 
 1.Clonar o Repositório
 
-git clone https://github.com/seu-utilizador/audio-mixer-app.git
+git clone https://github.com/carlneto/audio-mixer-app.git
 cd audio-mixer-app
 
 2.Abrir no Xcode
