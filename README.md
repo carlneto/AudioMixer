@@ -50,7 +50,7 @@ The app includes an intelligent **ducking engine** that automatically lowers the
 
 ```bash
 git clone https://github.com/carlneto/AudioMixer.git
-cd audio-mixer-app
+cd AudioMixer
 open AudioMixerApp.xcodeproj
 ```
 
