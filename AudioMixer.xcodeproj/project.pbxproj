@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		AF8EF1742EDCAB61003179A2 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = AF8EF1732EDCAB61003179A2 /* LICENSE */; };
+		AF8EF1762EDCAF95003179A2 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = AF8EF1752EDCAF95003179A2 /* README.md */; };
 		AFE000FA2C64FF43001D32CA /* AudioMixerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFE000F92C64FF43001D32CA /* AudioMixerApp.swift */; };
 		AFE000FC2C64FF43001D32CA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFE000FB2C64FF43001D32CA /* ContentView.swift */; };
 		AFE000FE2C64FF44001D32CA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AFE000FD2C64FF44001D32CA /* Assets.xcassets */; };
@@ -16,6 +17,7 @@
 
 /* Begin PBXFileReference section */
 		AF8EF1732EDCAB61003179A2 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		AF8EF1752EDCAF95003179A2 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		AFE000F62C64FF43001D32CA /* AudioMixer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AudioMixer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AFE000F92C64FF43001D32CA /* AudioMixerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioMixerApp.swift; sourceTree = "<group>"; };
 		AFE000FB2C64FF43001D32CA /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -41,6 +43,7 @@
 			children = (
 				AFE000F82C64FF43001D32CA /* AudioMixer */,
 				AF8EF1732EDCAB61003179A2 /* LICENSE */,
+				AF8EF1752EDCAF95003179A2 /* README.md */,
 				AFE000F72C64FF43001D32CA /* Products */,
 			);
 			sourceTree = "<group>";
@@ -134,6 +137,7 @@
 			files = (
 				AF8EF1742EDCAB61003179A2 /* LICENSE in Resources */,
 				AFE001012C64FF44001D32CA /* Preview Assets.xcassets in Resources */,
+				AF8EF1762EDCAF95003179A2 /* README.md in Resources */,
 				AFE000FE2C64FF44001D32CA /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
