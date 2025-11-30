@@ -1,157 +1,140 @@
-# Audio Mixer App
+# 📦 Audio Mixer App
 
-O Audio Mixer App é uma aplicação nativa para macOS desenvolvida em
-SwiftUI que permite misturar dois ficheiros de áudio: uma faixa de fundo
-(Original) e uma faixa de voz (Voz). A funcionalidade principal é o
-ducking inteligente, que reduz automaticamente o volume da faixa de
-fundo quando a voz é detetada na faixa de voz, garantindo que a voz se
-destaque na mistura final.
+### Intelligent Voice-Aware Audio Mixing for macOS
 
-## ⚙️ Requisitos
+[![Platform](https://img.shields.io/badge/platform-macOS_14+-lightgrey.svg)]()
+[![Swift](https://img.shields.io/badge/Swift-5.9-orange.svg)]()
+[![Xcode](https://img.shields.io/badge/Xcode-15.0-blue.svg)]()
+[![License](https://img.shields.io/badge/License-Restricted-red.svg)]()
 
-Para compilar e executar o projeto, necessita das seguintes versões
-mínimas:
+A native macOS application built with **SwiftUI** that mixes two audio tracks:
+a *background track* (“Original”) and a *voice track* (“Voice”).
+The app includes an intelligent **ducking engine** that automatically lowers the background audio whenever voice is detected, resulting in a clear and well-balanced final mix.
 
-  -------------- -----------------
-  Requisito      Versão Mínima
+---
 
-  Sistema        macOS 14.0
-  Operativo      (Sonoma)
+## ✨ Key Features
 
-  Xcode          15.0
+* **File Selection**
+  Import common audio formats: `.aiff`, `.m4a`, `.mp3`, `.wav`.
 
-  Swift          5.9
-  -------------- -----------------
+* **Intelligent Ducking**
+  Automatically reduces the background audio to a low volume when voice activity is detected.
 
-## 🚀 Instalação
+  * Normal volume: `1.0`
+  * Ducking volume: `0.05`
+  * Voice detection threshold: `-50 dB`
 
-Siga os passos abaixo para configurar o projeto localmente.
+* **Audio Mixing Engine**
+  Uses **AVFoundation** (`AVMutableComposition`, `AVAssetReader`, `AVAssetExportSession`) for precise mixing and export.
 
-1.Clonar o Repositório
+* **Asynchronous Processing**
+  The UI remains responsive while the app processes and exports the final mix.
 
+* **Export to M4A**
+  Final output is saved as a high-quality `.m4a` file.
+
+---
+
+## 🖥️ Requirements
+
+| Component | Minimum Version |
+| --------- | --------------- |
+| macOS     | 14.0 (Sonoma)   |
+| Xcode     | 15.0            |
+| Swift     | 5.9             |
+
+---
+
+## 🚀 Installation
+
+```bash
 git clone https://github.com/carlneto/audio-mixer-app.git
 cd audio-mixer-app
-
-2.Abrir no Xcode
-
 open AudioMixerApp.xcodeproj
+```
 
-3.Compilar e Executar
+Then choose **My Mac** as the run destination and press **⌘R**.
 
-Selecione o seu destino (por exemplo, \"My Mac\" ) e clique em Run (ou
-⌘R) para iniciar a aplicação.
+---
 
-## 🎙️ Uso
+## 🎙️ How to Use
 
-A interface de utilizador é simples e direta:
+1. **Select Original**
+   Choose the background audio track (music, ambience, effects, etc.).
 
-1.Selecionar Original: Clique em \"Selecionar Original\" para escolher o
-ficheiro de áudio de fundo (música, efeitos, etc.).
+2. **Select Voice**
+   Choose the voice track (narration, dialogue, podcast vocals, etc.).
 
-2.Selecionar Voz: Clique em \"Selecionar Voz\" para escolher o ficheiro
-de áudio com a voz (narração, diálogo, etc.).
+3. **Select Output & Mix**
+   Pick the destination file and start the mixing process.
 
-3.Selecionar Destino & Misturar Áudios: Clique neste botão para escolher
-a localização onde o ficheiro de áudio misturado será guardado e iniciar
-o processo de mistura.
+The application will notify you when the export is complete or if an error occurs.
 
-O processo de mistura é assíncrono e a aplicação irá notificar o
-utilizador quando estiver concluído ou se ocorrer um erro.
+---
 
-## 📂 Estrutura do Projeto
+## 🧠 Ducking Logic (Simplified Example)
 
-O projeto segue uma estrutura modular típica de aplicações SwiftUI.
+```swift
+// Volume levels
+let detectedVolume: Float = 0.05     // volume when voice is detected
+let normalVolume: Float = 1.0        // volume when no voice is detected
+let silenceThreshold: Float = -50.0  // dB threshold for silence
 
-  --------------------- ------------------------------------------------------
-  Ficheiro/Pasta        Descrição
-
-  AudioMixerApp.swift   O ponto de entrada principal da aplicação, definindo a
-                        estrutura da App.
-
-  ContentView.swift     A vista principal da aplicação, contendo a interface
-                        de utilizador para seleção de ficheiros e início da
-                        mistura.
-
-  MixerEngine.swift     (Implícito na ContentView) Contém a lógica de mistura
-                        de áudio, utilizando AVFoundation para composição e
-                        exportação.
-
-  Resources/            Pasta para quaisquer assets da aplicação (ícones,
-                        imagens, etc.).
-  --------------------- ------------------------------------------------------
-
-## ✨ Funcionalidades Principais
-
-•Seleção de Ficheiros: Suporte para seleção de ficheiros de áudio comuns
-(.aiff, .m4a, .mp3, .wav).
-
-•Mistura de Áudio: Combinação de duas faixas de áudio usando
-AVMutableComposition.
-
-•Ducking Inteligente: Ajuste de volume dinâmico na faixa \"Original\"
-com base na deteção de voz na faixa \"Voz\". O volume é reduzido para
-0.05 quando a voz é detetada.
-
-•Exportação: Exportação do resultado final para o formato .m4a.
-
-### Exemplo de Lógica de Ducking (em mixAudioFilesWithVolumeAdjustment)
-
-// Define the volume to apply to the original track when voice is detected
-let detectedVolume: Float = 0.05 
-// Define the volume to apply when no voice is detected
-let normalVolume: Float = 1.0
-// Define the threshold (in dB) below which audio is considered silence
-let silenceThreshold: Float = -50.0
-
-// ... (AVAssetReader setup)
-
-// Iterate through audio samples to detect voice
+// ...
 while assetReader.status == .reading {
-    // ... (read sample buffer and calculate RMS/dB)
-    
+    // Calculate RMS / dB from current audio buffer
     if db > silenceThreshold {
-        // Voice detected: duck the original track volume
+        // Voice detected
         parameters.setVolume(detectedVolume, at: currentTime)
     } else {
-        // Silence: restore original track volume
+        // No voice
         parameters.setVolume(normalVolume, at: currentTime)
     }
-    // ... (update currentTime)
+    // Update currentTime for the next sample window
 }
+```
 
-## ⚖️ Licença
+---
 
-Este projeto está coberto por uma Licença de Utilização Restrita.
+## 📂 Project Structure
 
-Resumo da Licença:
+| File / Folder           | Description                            |
+| ----------------------- | -------------------------------------- |
+| **AudioMixerApp.swift** | App entry point (SwiftUI).             |
+| **ContentView.swift**   | Main UI for file selection and mixing. |
+| **MixerEngine.swift**   | Core mixing logic using AVFoundation.  |
+| **Resources/**          | Assets (icons, images, etc.).          |
 
-•Proibições: É estritamente proibida a modificação, engenharia inversa,
-distribuição, sublicenciamento, partilha pública ou privada, e qualquer
-utilização comercial do software sem autorização expressa por escrito do
-autor.
+---
 
-•Propriedade Intelectual: O software e o seu código-fonte são
-propriedade exclusiva do autor. Não é concedida qualquer licença
-implícita.
+## 🧪 Roadmap (Suggested Improvements)
 
-•Utilização Permitida: Apenas é permitida a utilização estritamente
-pessoal, privada e não comercial, com o único propósito de avaliação e
-testes. Qualquer outro uso requer autorização escrita.
+* [ ] Waveform visualization
+* [ ] Adjustable ducking parameters (threshold, fade in/out, ratio)
+* [ ] Support for more export formats
+* [ ] Preview playback before exporting
+* [ ] Batch processing of multiple audio pairs
 
-•Isenção de Garantias: O software é fornecido \"tal como está\" (\"AS
-IS\"), sem garantias de qualquer tipo.
+---
 
-•Limitação de Responsabilidade: O autor não é responsável por quaisquer
-danos diretos ou indiretos resultantes da utilização ou impossibilidade
-de utilização do software.
+## ❗ License (Restricted Use)
 
-Para os termos completos, consulte o ficheiro LICENSE (não fornecido,
-mas implícito).
+This software is provided under a **Restricted-Use License**:
 
-## ✍️ Créditos/Autores
+* **Prohibited:** modification, distribution, reverse engineering, sublicensing, public or private sharing, or commercial use without written permission.
+* **Ownership:** all intellectual property belongs exclusively to the author.
+* **Permitted Use:** strictly personal, private, non-commercial evaluation.
+* **No Warranty:** provided *“as is”*.
+* **Liability:** no responsibility for any direct or indirect damages.
 
-•Autor: carlneto
+For full terms, see the accompanying LICENSE file (not distributed).
 
-•Ano: 2025
+---
 
-•Tecnologias: Swift, SwiftUI, AVFoundation
+## ✍️ Author
+
+**carlneto — 2025**
+Technologies: Swift, SwiftUI, AVFoundation
+
+---
